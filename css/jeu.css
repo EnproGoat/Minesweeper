@@ -1,12 +1,88 @@
-#champ {
-    width: 420px;
-    height: 420px;
-    background-color: rgb(175, 170, 170);
-    border: 5px solid rgb(51, 50, 50);
+@font-face {
+    font-family: 'windows-xp-tahoma';
+    src: url('../fonts/windows-xp-tahoma.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+*{
+    font-family: 'windows-xp-tahoma', sans-serif;
+    box-sizing: border-box;
+}
+
+body{
+    background-image: url(../img/background.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+header{
+    width: calc(420px - 4px + 10px);
+    height: 60px;
+    background: linear-gradient(to bottom, #597ce4, #2c4fdb);
+    color: white;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    border-top: 2px solid rgb(174, 174, 187);
+    border-left: 2px solid rgb(187, 187, 202);
+    border-bottom: 2px solid rgb(12, 12, 80);
+    border-right: 2px solid rgb(12, 12, 80);
+}
+
+header h2{
+    font-size: 30px;
+    margin: 0;
+}
+
+#logo {
+    width: 30px;
+    height: auto;
+}
+
+#logo-titre{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-left: 10px;
+}
+
+#boutonxp{
+    margin-right: 10px;
+}
+
+#boutonxp img{
+    width: auto;
+    height: 30px;
+    cursor: pointer;
+}
+
+#demineur {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    border-radius: 10px;
+    align-items: center;
+}
+
+#champ {
+    width: 420px;
+    height: 470px;
+    background-color: rgb(175, 170, 170);
+    border: 5px solid #2c4fdb;
+    border-top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     padding: 0; 
 }
 
@@ -28,7 +104,7 @@
 }
 
 #lien {
-    position: fixed;
+    margin-top: 10px;
     top: 470px;
     left: 50px;
     width: 400px;
@@ -48,6 +124,13 @@ button {
     line-height: 1.5em;
     padding: 5px;
     margin: 0px 20px;
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+#lien button:hover{
+    background-color: rgb(195, 194, 194);
+    transition: 0.2s;
 }
 
 button:active {
@@ -56,11 +139,106 @@ button:active {
     box-shadow: 2px 2px 2px grey;
 }
 
-body{
-    background-color: rgb(133, 129, 129);
-}
-
-
 #canvas{
     background-color: transparent;
 }
+
+.popup-container {
+    z-index: 1000;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s;
+}
+
+.popup-container.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.popup-box {
+    background: rgb(255, 255, 255);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    min-width: 300px;
+
+    transform: translateY(-20px);
+    transition: transform 0.4s ease;
+}
+
+.popup-container.show .popup-box {
+    transform: translateY(0);
+}
+
+.popup-box button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border: none;
+    background: red;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.1s;
+}
+
+.popup-box button:hover {
+    background: darkred;
+    transition: 0.2s;
+}
+
+footer {
+    background-image: url("../img/taskbar.png");
+    background-size: 100% 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    align-items: center;
+    width: 100%;
+    min-height: 50px;
+}
+
+#heure {
+    margin: 0;
+    color: white;
+    margin-right: 4%;
+    font-size: 200%;
+}
+
+#remplissage {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vibration {
+    animation: shake 0.5s;
+  
+    animation-iteration-count: infinite;
+  }
+  
+  @keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+  }
