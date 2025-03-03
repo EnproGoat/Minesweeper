@@ -4,22 +4,41 @@
 	<meta charset="utf-8">
 	<title>Demineur</title>
 	<link rel="stylesheet" type="text/css" href="css/jeu.css">
-	<script defer type="text/javascript" src="js/element.js"></script>
 	<script defer type="text/javascript" src="js/jeu.js"></script>
 	<script defer type="text/javascript" src="js/scenario.js"></script>
 </head>
 <body>
-	<!-- div associée au champ de mines -->
-	<div id="champ">
-		<canvas id="canvas" width="400" height="400"></canvas>
+	<div class="popup-container" id="popup">
+        <div class="popup-box">
+            <p id="popup-message"></p>
+            <button onclick="closePopup()">Fermer</button>
+        </div>
+    </div>
+	<div id="remplissage">
+		<div id="demineur">
+			<header>
+				<div id="logo-titre">
+					<img id="logo" src="img/minesweeper_logo.webp">
+					<h2>Démineur</h2>
+				</div>
+				<div id="boutonxp">
+					<img src="img/buttonxp.png">
+				</div>
+			</header>
+			<!-- div associée au champ de mines -->
+			<div id="champ">
+				<canvas id="canvas" width="400" height="400"></canvas>
+				
+				<!-- div pour nouvelle partie -->
+				<div id="lien">
+					<button id="nouvelle-partie" href="#">Nouvelle Partie</button>
+				</div>
+			</div>
+	
+		</div>
 	</div>
-	<!-- div associée à la situation du personnage (mines, gagné, perdu, ...) -->
-	<div id="message">Champ pour un message</div>
-	<!-- div associée à l'affichage du score -->
-	<div id="score">Champ pour le score</div>
-	<!-- div pour nouvelle partie -->
-	<div id="lien">
-		<button id="nouvelle-partie" href="#">Nouvelle Partie</button>
-	</div>
+	<footer>
+		<h3 id="heure"></h3>
+	</footer>
 </body>
 </html>
