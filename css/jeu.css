@@ -1,0 +1,66 @@
+#champ {
+    width: 420px;
+    height: 420px;
+    background-color: rgb(175, 170, 170);
+    border: 5px solid rgb(51, 50, 50);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 0; 
+}
+
+#canvas {
+    display: block; 
+}
+
+
+#message {
+    position: fixed;
+    top: 100px;
+    left: 550px;
+}
+
+#score {
+    position: fixed;
+    top: 50px;
+    left: 550px;
+}
+
+#lien {
+    position: fixed;
+    top: 470px;
+    left: 50px;
+    width: 400px;
+    display: flex;
+    justify-content: space-around;
+}
+
+button {
+    border: solid 1px grey;
+    border-radius: 4px;
+    background-color: lightgrey;
+    box-shadow: 4px 4px 4px grey;
+    color: black;
+    outline: none;
+    position: relative;
+    text-decoration: none;
+    line-height: 1.5em;
+    padding: 5px;
+    margin: 0px 20px;
+}
+
+button:active {
+    top: 2px;
+    left: 2px;  
+    box-shadow: 2px 2px 2px grey;
+}
+
+body{
+    background-color: rgb(133, 129, 129);
+}
+
+
+#canvas{
+    background-color: transparent;
+}
