@@ -4,7 +4,10 @@ const directions = [
     [-1, -1], [-1, 1], [1, -1], [1, 1] 
 ];
 var canvas = document.getElementById("canvas");
+const fenetreJeu = document.querySelector("#demineur");
 var context = canvas.getContext("2d");
+var explosionSound = new Audio('../sounds/8-bit-explosion.wav');
+explosionSound.volume = 0.25;
 
 class Jeu {
     constructor(probaMine) {
@@ -12,6 +15,8 @@ class Jeu {
         this.carte = [];
         this.carteSafe = [];
         this.EtatJeu = 0;
+        this.etatCaseInconnu = false;
+        this.stopRevealMines = true;
 
         //Creation carte
         for (let i = 0; i < 20; i++) {
@@ -30,19 +35,40 @@ class Jeu {
         }
     }
 
+    verifVictoire() {
+        for (let i = 0; i < this.carteSafe.length; i++) {
+            for (let j = 0; j < this.carteSafe[i].length; j++) {
+                if (this.carteSafe[i][j] === false && this.carte[i][j] !== true) {
+                    return;
+                 }
+            }
+        }
+        this.EtatJeu = 1;
+    }
 
     /**
      * Affiche toutes les mines
      */
     afficherMines() {
-        
-    }
-
-    /**
-     * Cache toutes les mines
-     */
-    cacherMines() {
-        
+        let delay = 0;
+        for (let i = 0; i < 20; i++) {
+            for (let j = 0; j < 20; j++) {
+                if (this.carte[i][j] == true){
+                    setTimeout(() => {
+                        if (!this.stopRevealMines) {
+                            this.creationExplosion(i, j);
+                        }
+                    }, delay);
+                    delay += 200;
+                }
+                if(this.stopRevealMines == true){
+                    break;
+                }
+            }
+            if(this.stopRevealMines == true){
+                break;
+            }
+        }
     }
 
     /**
@@ -68,13 +94,26 @@ class Jeu {
         return nbMines;
     }
 
+    creationExplosion(i,j){
+        this.CreerCaseReveler(i , j, "💥");
+            fenetreJeu.classList.add("vibration");
+            setTimeout(() => {
+                fenetreJeu.classList.remove("vibration");
+            }, 100);
+            if (!explosionSound.paused) {
+                explosionSound.currentTime = 0;
+            }
+            explosionSound.play();
+    }
+
     revelerCase(i, j){
-        if (this.carteSafe[i][j]) return;
+        if (this.carteSafe[i][j] || this.EtatJeu != 0) return;
         if(this.carte[i][j] === true){
-            this.CreerCase(i , j, "💥");
+            this.creationExplosion(i,j);
+            this.stopRevealMines = false;
             this.EtatJeu = -1;
         } else {
-            this.CreerCase(i,j,"");
+            this.CreerCaseReveler(i,j,"");
             this.carteSafe[i][j] = true;
             directions.forEach(([di , dj])=>{
                 let ligneVoisine = i + di;
@@ -85,9 +124,9 @@ class Jeu {
                     if (this.carte[ligneVoisine][colonneVoisine] === false && this.carteSafe[ligneVoisine][colonneVoisine] === false){
                         let nbMines = this.nbMinesVoisines(di + i, dj + j);
                         if(nbMines == 0){
-                            this.CreerCase(ligneVoisine, colonneVoisine,"");
+                            this.CreerCaseReveler(ligneVoisine, colonneVoisine,"");
                         } else {
-                            this.CreerCase(ligneVoisine, colonneVoisine,nbMines);
+                            this.CreerCaseReveler(ligneVoisine, colonneVoisine,nbMines);
                         }
                         this.carteSafe[ligneVoisine][colonneVoisine] = true;
                     }
@@ -98,7 +137,6 @@ class Jeu {
     }
 
     genererGrille() {
-        context.clearRect(0, 0, canvas.width, canvas.height);
         context.beginPath();
     
         for (var x = 0; x <= 400; x += 20) {
@@ -113,11 +151,67 @@ class Jeu {
     
         context.strokeStyle = "black";
         context.stroke();
+        if (this.etatCaseInconnu == false){
+            this.genererCaseInconnu();
+        }
     }
     
+    nettoyerGrile(){
+        context.clearRect(0, 0, canvas.width, canvas.height);
+    }
 
+    genererCaseInconnu() {
+        this.etatCaseInconnu = true;
+        for (let i = 0; i < 20; i++) {
+            for (let j = 0; j < 20; j++) {
+                this.CreerCaseInconnu(i,j,"");
+            }
+        }
+        this.genererGrille();
+    }
+
+    CreerDrapeau(ligne,colonne){
+        this.CreerCaseInconnu(ligne,colonne,"🚩")
+    }
+
+    CreerCaseInconnu(ligne, colonne,contenu) {
+        let x = colonne * 20;
+        let y = ligne * 20;
+        let padding = 2;
     
-    CreerCase(ligne, colonne, contenu) {
+        context.fillStyle = "lightgray";
+        context.fillRect(x + padding, y + padding, 20 - 2 * padding, 20 - 2 * padding);
+    
+        context.strokeStyle = "white";
+        context.beginPath();
+        context.moveTo(x + padding, y + padding);
+        context.lineTo(x + 20 - padding, y + padding);
+        context.stroke();
+    
+        context.beginPath();
+        context.moveTo(x + padding, y + padding);
+        context.lineTo(x + padding, y + 20 - padding);
+        context.stroke();
+    
+        context.strokeStyle = "darkgray";
+        context.beginPath();
+        context.moveTo(x + padding, y + 20 - padding);
+        context.lineTo(x + 20 - padding, y + 20 - padding);
+        context.stroke();
+    
+        context.beginPath();
+        context.moveTo(x + 20 - padding, y + padding);
+        context.lineTo(x + 20 - padding, y + 20 - padding);
+        context.stroke();
+
+        context.fillStyle = "black";
+        context.font = "10px Arial";
+        context.textAlign = "center";
+        context.textBaseline = "middle";
+        context.fillText(contenu, x + 10, y + 10)
+    }
+    
+    CreerCaseReveler(ligne, colonne, contenu) {
         let x = colonne * 20;
         let y = ligne * 20;
     
@@ -132,36 +226,7 @@ class Jeu {
         context.textAlign = "center";
         context.textBaseline = "middle";
         context.fillText(contenu, x + 10, y + 10);
+        this.genererGrille();
     }
-    
-
-    /*
-    genererGrille() {
-        let champ = document.getElementById("champ");
-        champ.innerHTML = "";
-    
-        for (let i = 0; i < 20; i++) {
-            for (let j = 0; j < 20; j++) {
-                let caseDiv = document.createElement("div");
-                caseDiv.classList.add("case", "hidden");
-                caseDiv.dataset.ligne = i;
-                caseDiv.dataset.colonne = j;
-    
-                caseDiv.style.position = "absolute";
-                caseDiv.style.top = (34 + i * 20) + "px";
-                caseDiv.style.left = (50 + j * 20) + "px";
-                caseDiv.style.width = "20px";
-                caseDiv.style.height = "20px";
-                caseDiv.addEventListener("click", () => this.revelerCase(i, j));
-                caseDiv.addEventListener("contextmenu", (e) => {
-                    e.preventDefault();
-                    //marquerMine(i, j);
-                });
-    
-                champ.appendChild(caseDiv);
-            }
-        }
-    }
-    */
     
 }
