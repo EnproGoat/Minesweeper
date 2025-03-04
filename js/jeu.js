@@ -8,7 +8,7 @@ const fenetreJeu = document.querySelector("#demineur");
 var context = canvas.getContext("2d");
 if (window.location.protocol === "file:") {
     var explosionSound = new Audio('sounds/8-bit-explosion.wav');
-} else {f
+} else {
     var explosionSound = new Audio('../sounds/8-bit-explosion.wav');
 }
 explosionSound.volume = 0.15;
