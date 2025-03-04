@@ -19,6 +19,10 @@ Un jeu du démineur simple.
 
 ## 📦 Installation
 
+**Installez directement le fichier zip**
+
+**OU**
+
 **Via Git**
 1. **Clone** ce dépôt sur ton ordinateur :
    ```bash
@@ -38,6 +42,8 @@ Un jeu du démineur simple.
    ```
 
 ## 🎮 Utilisation
+
+**Si vous avez installer le fichier zip lancez index.html**
 
 Lance l'application avec :
 ```bash
