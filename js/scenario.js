@@ -3,7 +3,11 @@ let jeu;  // variable globale représentant le jeu actuel
 var canvas = document.getElementById("canvas");
 let popup = document.getElementById("popup");
 let popupmessage = document.getElementById("popup-message");
-var victorySound = new Audio('../sounds/8-bit-Victory.mp3')
+if (window.location.protocol === "file:") {
+    var victorySound = new Audio('sounds/8-bit-Victory.mp3')
+} else {
+    var victorySound = new Audio('../sounds/8-bit-Victory.mp3')
+}
 
 function miseAJour() {
     jeu.verifVictoire();
