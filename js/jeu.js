@@ -6,8 +6,12 @@ const directions = [
 var canvas = document.getElementById("canvas");
 const fenetreJeu = document.querySelector("#demineur");
 var context = canvas.getContext("2d");
-var explosionSound = new Audio('../sounds/8-bit-explosion.wav');
-explosionSound.volume = 0.25;
+if (window.location.protocol === "file:") {
+    var explosionSound = new Audio('sounds/8-bit-explosion.wav');
+} else {f
+    var explosionSound = new Audio('../sounds/8-bit-explosion.wav');
+}
+explosionSound.volume = 0.15;
 
 class Jeu {
     constructor(probaMine) {
