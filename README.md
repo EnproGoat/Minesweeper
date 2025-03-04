@@ -54,7 +54,7 @@ start index.html
 
 Avec docker
 ```bash
-docker run -d -p 8080:80 printfdric/minesweeperforsaki
+docker run -d -p 8080:80 printfdric/minesweeper
 ```
 Puis va sur localhost:8080
 
