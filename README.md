@@ -19,6 +19,10 @@ Un jeu du démineur simple.
 
 ## 📦 Installation
 
+**Installez directement le fichier zip**
+
+**OU**
+
 **Via Git**
 1. **Clone** ce dépôt sur ton ordinateur :
    ```bash
@@ -39,6 +43,8 @@ Un jeu du démineur simple.
 
 ## 🎮 Utilisation
 
+**Si vous avez installer le fichier zip lancez index.html**
+
 Lance l'application avec :
 ```bash
 start index.html
@@ -48,7 +54,7 @@ start index.html
 
 Avec docker
 ```bash
-docker run -d -p 8080:80 printfdric/minesweeperforsaki
+docker run -d -p 8080:80 printfdric/minesweeper
 ```
 Puis va sur localhost:8080
 
