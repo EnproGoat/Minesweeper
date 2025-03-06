@@ -63,7 +63,7 @@ class Jeu {
                             this.creationExplosion(i, j);
                         }
                     }, delay);
-                    delay += 200;
+                    delay += 110;
                 }
                 if(this.stopRevealMines == true){
                     break;
