@@ -19,7 +19,7 @@ Un jeu du démineur simple.
 
 ## 📦 Installation
 
-**Installez directement le fichier zip**
+**Télécharger directement le code sur GitHub**
 
 **OU**
 
